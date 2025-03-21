@@ -1,0 +1,50 @@
+<div class="container">
+  <div class="d-flex justify-content-end mb-3">
+    <button class="btn btn-primary" (click)="openModal()">
+      <i class="bi bi-plus-square fs-5"></i>
+      Agendar uma Consulta
+    </button>
+  </div>
+
+  <div class="container mt-3">
+    <h3>Ver Agendamentos</h3>
+
+    <div *ngIf="isLoading" class="d-flex justify-content-center text-primary mt-4">
+      <div class="spinner-border" role="status">
+      </div>
+    </div>
+
+    <div *ngIf="!isLoading && consultas.length === 0" class="empty-table table-error">
+      <i class="bi bi-emoji-expressionless-fill fs-1 text-center"></i>
+      <p class="text-center text-muted">Nenhum registro encontrado.</p>
+    </div>
+
+    <table *ngIf="!isLoading && consultas.length > 0" class="table table-striped mt-3">
+      <thead>
+        <tr>
+          <th scope="col">Paciente</th>
+          <th scope="col">Médico</th>
+          <th scope="col">Data</th>
+          <th scope="col">Status</th>
+          <th scope="col">Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let consulta of consultas;">
+          <td>{{ consulta.paciente.nome }}</td>
+          <td>{{ consulta.medico.nome }}</td>
+          <td>{{ consulta.dataConsulta }}</td>
+          <td>{{ consulta.status }}</td>
+          <td>
+            <button class="btn btn-warning btn-sm me-1" (click)="editItem(consulta)">
+              <i class="bi bi-pencil-square"></i>
+            </button>
+            <button class="btn btn-danger btn-sm" (click)="removeItem(consulta.id)">
+              <i class="bi bi-trash"></i>
+            </button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

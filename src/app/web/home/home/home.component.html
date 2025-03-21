@@ -1,0 +1,43 @@
+<body>
+  <section class="etapas-atendimento container d-flex justify-content-center my-2 mb-5">
+    <div class="row text-center w-100">
+      <div class="col-md-3">
+        <div class="p-3 border rounded bg-light cursor-pointer" (click)="mostrarComponente('agendamento')">
+          <img src="assets/resources/card-agendamento.png" alt="Agendamento">
+          <i class="fas fa-calendar-alt fa-3x text-danger"></i>
+          <h4 class="mt-3 text-danger">Agendamentos</h4>
+          <h4 class="mt-1 text-danger">{{totalAgendamentos}}</h4>
+        </div>
+      </div>
+      <div class="col-md-3">
+        <div class="p-3 border rounded bg-light cursor-pointer" (click)="mostrarComponente('paciente')">
+          <img src="assets/resources/card-acolhimento.png" alt="Acolhimento">
+          <i class="fas fa-user-md fa-3x text-danger"></i>
+          <h4 class="mt-3 text-danger">Pacientes</h4>
+          <h4 class="mt-1 text-danger">{{totalPacientes}}</h4>
+        </div>
+      </div>
+      <div class="col-md-3">
+        <div class="p-3 border rounded bg-light cursor-pointer" (click)="mostrarComponente('medico')">
+          <img src="assets/resources/card-atendimento.png" alt="Atendimento">
+          <i class="fas fa-stethoscope fa-3x text-danger"></i>
+          <h4 class="mt-3 text-danger">Médicos</h4>
+          <h4 class="mt-1 text-danger">{{totalMedicos}}</h4>
+        </div>
+      </div>
+      <div class="col-md-3">
+        <div class="p-3 border rounded bg-light cursor-pointer" (click)="mostrarComponente('especialidade')">
+          <img src="assets/resources/card-pos-consulta.png" alt="Pós-consulta">
+          <i class="fas fa-file-medical fa-3x text-danger"></i>
+          <h4 class="mt-3 text-danger">Especialidades</h4>
+          <h4 class="mt-1 text-danger">{{totalEspecialidades}}</h4>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <app-agendamento *ngIf="componenteAtual === 'agendamento'"></app-agendamento>
+  <app-paciente *ngIf="componenteAtual === 'paciente'"></app-paciente>
+  <app-medico *ngIf="componenteAtual === 'medico'"></app-medico>
+  <app-especialidade *ngIf="componenteAtual === 'especialidade'"></app-especialidade>
+</body>

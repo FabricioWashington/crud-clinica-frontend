@@ -1,0 +1,35 @@
+/* You can add global styles to this file, and also import other style files */
+html,
+body {
+  height: 100%;
+  padding-top: 34px;
+  padding-bottom: 20px;
+}
+
+body {
+  margin: 0;
+  font-family: Roboto, "Helvetica Neue", sans-serif;
+}
+
+.success-snackbar {
+  background-color: #4caf50;
+  color: white;
+}
+
+.error-snackbar {
+  background-color: #f44336;
+  color: white;
+}
+
+.info-snackbar {
+  background-color: #2196f3;
+  color: white;
+}
+
+:root {
+  --cor-branco: #ffffff;
+  --cor-azul: #61C1D0;
+  --cor-cinza: #f8f9fa;
+  --cor-vermelho: #dc3545;
+  --cor-azul-claro: #30a5aa;
+}

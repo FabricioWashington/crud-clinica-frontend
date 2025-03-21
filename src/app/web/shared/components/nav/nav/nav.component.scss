@@ -1,0 +1,113 @@
+.mat-toolbar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  width: 100%;
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px 20px;
+  background-color: #007bff;
+  color: white;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+
+.search-bar {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+.search-input-container {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-direction: row-reverse;
+  flex: 0 1;
+}
+
+.search-input {
+  flex: 0 1;
+  padding: 5px 15px;
+  border: 1px solid #ddd;
+  border-radius: 25px;
+  outline: none;
+  font-size: 16px;
+  transition: border 0.3s;
+}
+
+.search-input:focus {
+  border-color: #0056b3;
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
+}
+
+.actions button {
+  background-color: transparent;
+  border: none;
+  padding: 8px;
+  border-radius: 50%;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.actions button:hover {
+  background-color: rgba(255, 255, 255, 0.2);
+}
+
+.my-account span {
+  font-size: 14px;
+  margin-right: 10px;
+}
+
+.pesquisaIcon {
+  width: 20px;
+  height: 20px;
+}
+
+.menu-header {
+  display: flex;
+  justify-content: center;
+}
+
+.my-account-container {
+  position: relative;
+}
+
+.arrow-icon {
+  transition: transform 0.3s ease, color 0.3s ease;
+  cursor: pointer;
+  color: white;
+}
+
+
+.mat-menu-item mat-icon {
+  font-size: 18px;
+  color: #ffff;
+}
+
+mat-icon {
+  font-size: 24px;
+  color: #ffff;
+  cursor: pointer;
+}
+
+.mat-menu-item span {
+  display: inline-block;
+  font-weight: bold;
+}
+
+.mat-menu-item:hover {
+  background-color: #f5f5f5;
+}
+
+.navigation-buttons {
+  gap: 10px;
+}
+
+mat-icon.disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}

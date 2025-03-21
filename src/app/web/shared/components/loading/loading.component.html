@@ -1,0 +1,9 @@
+<div class="loading-overlay" *ngIf="loading">
+  <div class="loading-container">
+    <img src="../assets/resources/images/fwWhite.png" alt="Logo" class="logo">
+    <div class="progress-bar">
+      <div class="progress" [style.width.%]="progress"></div>
+    </div>
+    <p class="percentage">{{ percentageText }}</p>
+  </div>
+</div>

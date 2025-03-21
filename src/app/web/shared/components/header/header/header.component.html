@@ -1,0 +1,12 @@
+<body>
+  <header class="side-menu" [ngClass]="{ 'collapsed': isMenuCollapsed }" (mouseenter)="collapseMenu()" (mouseleave)="expandMenu()">
+    <ul class="side-bar">
+      <li *ngFor="let item of menuItems">
+        <a [routerLink]="item.route" routerLinkActive="active" class="menu-link">
+          <mat-icon class="menu-icon material-symbols-outlined">{{ item.icon }}</mat-icon>
+          <span *ngIf="isMenuCollapsed">{{ item.label }}</span>
+        </a>
+      </li>
+    </ul>
+  </header>
+</body>

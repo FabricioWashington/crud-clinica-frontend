@@ -1,0 +1,93 @@
+.navbar {
+  background-color: var(--cor-branco) !important;
+}
+
+.btn{
+  border-radius: 12px;
+}
+
+.btn-danger {
+  background-color: var(--cor-vermelho);
+  border: none;
+}
+
+.btn-white{
+  background-color: var(--cor-branco);
+  color: var(--cor-vermelho);
+  border: 1px solid var(--cor-vermelho);
+}
+
+.btn-white:hover{
+  background-color: var(--cor-vermelho);
+  color: var(--cor-branco);
+}
+
+.btn-blue {
+  border-color: rgb(190 247 255);
+  border: 1px solid rgba(190, 247, 255, 1);
+  color: var(--cor-azul-claro);
+}
+
+.btn-blue:hover{
+  color: var(--cor-branco);
+  background: var(--cor-azul-claro);
+}
+
+.text-blue {
+  color: var(--cor-azul);
+}
+
+.text-blue:hover{
+  color: var(--cor-vermelho);
+}
+
+.texto-azul {
+  color: var(--cor-azul);
+}
+
+.text-danger {
+  color: var(--cor-vermelho) !important;
+}
+
+.bg-light {
+  background-color: var(--cor-cinza) !important;
+}
+
+.text-red {
+  color: var(--cor-vermelho) !important;
+}
+.carousel-caption {
+  position: absolute;
+  top: 50%;
+  left: 10%;
+  transform: translateY(-50%);
+  text-align: left;
+}
+
+.carousel-caption h1 {
+  font-size: 2.5rem;
+  font-weight: bold;
+}
+.carousel-caption p {
+  font-size: 1.5rem;
+}
+.carousel-caption .btn {
+  font-size: 1.5rem;
+  font-weight: bold;
+  background-color: var(--cor-vermelho);
+  color: var(--cor-branco);
+  border-radius: 10px;
+  padding: 10px 20px;
+}
+
+.carousel-item {
+  height: 1000px;
+}
+
+.carousel-control-next, .carousel-control-prev{
+  opacity: 10 !important;
+}
+
+.cursor-pointer {
+  cursor: pointer;
+}

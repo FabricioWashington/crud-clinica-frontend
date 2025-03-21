@@ -1,0 +1,47 @@
+<div class="container medico">
+  <div class="d-flex justify-content-end mb-3">
+    <button class="btn btn-primary" (click)="openModal()">
+      <i class="bi bi-plus-square fs-5"></i>
+      Adicionar Paciente
+    </button>
+  </div>
+
+<div class="container mt-3">
+  <h3>Ver Pacientes</h3>
+
+  <div *ngIf="isLoading" class="d-flex justify-content-center text-primary mt-4">
+    <div class="spinner-border" role="status">
+    </div>
+  </div>
+
+  <div *ngIf="!isLoading && pacientes.length === 0" class="empty-table table-error">
+    <i class="bi bi-emoji-expressionless-fill fs-1 text-center"></i>
+    <p class="text-center text-muted">Nenhum registro encontrado.</p>
+  </div>
+
+<table *ngIf="!isLoading && pacientes.length > 0" class="table table-striped mt-3">
+  <thead>
+    <tr>
+      <th scope="col">Cpf</th>
+      <th scope="col">Nome</th>
+      <th scope="col">Email</th>
+      <th scope="col">Actions</th>
+    </tr>
+  </thead>
+<tbody>
+  <tr *ngFor="let paciente of pacientes;">
+    <td>{{ paciente.cpf }}</td>
+    <td>{{ paciente.nome }}</td>
+    <td>{{ paciente.email }}</td>
+    <td>
+      <button class="btn btn-warning btn-sm me-1" (click)="editItem(paciente)">
+        <i class="bi bi-pencil-square"></i>
+      </button>
+      <button class="btn btn-danger btn-sm" (click)="removeItem(paciente.id)">
+        <i class="bi bi-trash"></i>
+      </button>
+    </td>
+  </tr>
+</tbody>
+</table>
+</div>
