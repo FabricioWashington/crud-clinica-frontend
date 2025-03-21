@@ -7,13 +7,15 @@
   <base href="./">
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
-  <meta http-equiv="Content-Security-Policy" content="default-src 'self';
-         script-src 'self' 'unsafe-inline';
-         style-src 'self' https://fonts.googleapis.com https://cdn.jsdelivr.net 'unsafe-inline';
-         font-src 'self' https://fonts.gstatic.com https://cdn.jsdelivr.net https://fonts.googleapis.com;
-         img-src 'self' data:;
-         object-src 'none';
-         connect-src 'self' https://crudclinica.onrender.com">
+  <meta http-equiv="Content-Security-Policy" content="
+    default-src 'self';
+    script-src 'self' 'unsafe-inline' 'unsafe-eval';
+    style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://cdn.jsdelivr.net;
+    font-src 'self' https://fonts.gstatic.com https://cdn.jsdelivr.net;
+    img-src 'self' data:;
+    connect-src 'self' https://crudclinica.onrender.com;
+    object-src 'none';
+  ">
 
 
   <link rel="icon" type="image/x-icon" href="assets/resources/images/fwWhite.png">
@@ -27,4 +29,5 @@
 <body class="mat-typography">
   <app-root></app-root>
 </body>
+
 </html>
