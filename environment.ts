@@ -1,4 +1,4 @@
 export const environment = {
   production: true,
-  apiUrl: 'https://crudclinica.onrender.com'
+  apiUrl: 'https://crudclinica.onrender.com/api'
 };
