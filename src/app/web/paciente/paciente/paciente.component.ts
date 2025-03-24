@@ -4,6 +4,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { ModalFormPacienteComponent } from '../modal/modal-form-paciente/modal-form-paciente.component';
 import { PacienteService } from '../../services/paciente.service';
 import { MessageService } from '../../shared/utils/message/message.service';
+import { ConfirmDialogComponent } from '../../shared/utils/confirm-dialog/confirm-dialog/confirm-dialog.component';
 
 @Component({
   selector: 'app-paciente',
@@ -40,14 +41,24 @@ export class PacienteComponent implements OnInit {
   }
 
   removeItem(id: number) {
-    if (confirm('Tem certeza que deseja remover este paciente?')) {
-      this.pacienteService.deletar(id).subscribe({
-        next: (response) => {
-          this.loadPacientes();
-          this.messageService.showSuccess('Paciente removido com sucesso!', 'Fechar');
-        }
-      });
-    }
+    const dialogRef = this.dialog.open(ConfirmDialogComponent, {
+      width: '350px',
+      data: {
+        titulo: 'Remover Paciente',
+        mensagem: 'Tem certeza que deseja remover este paciente?'
+      }
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        this.pacienteService.deletar(id).subscribe({
+          next: () => {
+            this.loadPacientes();
+            this.messageService.showSuccess('Paciente removido com sucesso!', 'Fechar');
+          }
+        });
+      }
+    });
   }
 
   editItem(paciente: Paciente) {

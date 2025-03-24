@@ -7,6 +7,7 @@ import { MatDialogModule } from '@angular/material/dialog';
 import { ErrorDialogComponent } from './components/error-dialog/error-dialog.component';
 import { SuccessDialogComponent } from './components/success-dialog/success-dialog/success-dialog.component';
 import { MatIconModule } from '@angular/material/icon';
+import { ConfirmDialogComponent } from './utils/confirm-dialog/confirm-dialog/confirm-dialog.component';
 
 
 
@@ -18,6 +19,7 @@ import { MatIconModule } from '@angular/material/icon';
     LoadingComponent,
     ErrorDialogComponent,
     SuccessDialogComponent,
+    ConfirmDialogComponent,
 
   ],
   imports: [

@@ -1,0 +1,8 @@
+<h1 mat-dialog-title>{{ data.titulo || 'Confirmação' }}</h1>
+<div mat-dialog-content>
+  <p>{{ data.mensagem || 'Tem certeza que deseja continuar?' }}</p>
+</div>
+<div mat-dialog-actions align="end">
+  <button mat-button (click)="dialogRef.close(false)">Cancelar</button>
+  <button mat-button color="warn" (click)="dialogRef.close(true)">Confirmar</button>
+</div>

@@ -4,6 +4,7 @@ import { EspecialidadeService } from '../../services/especialidade.service';
 import { MessageService } from '../../shared/utils/message/message.service';
 import { ModalFormEspecialidadeComponent } from '../modal/modal-form-especialidade/modal-form-especialidade.component';
 import { Especialidade } from '../../interfaces/especialidade';
+import { ConfirmDialogComponent } from '../../shared/utils/confirm-dialog/confirm-dialog/confirm-dialog.component';
 
 @Component({
   selector: 'app-especialidade',
@@ -41,14 +42,24 @@ export class EspecialidadeComponent implements OnInit {
   }
 
   removeItem(id: number) {
-    if (confirm('Tem certeza que deseja remover esta especialidade?')) {
-      this.especialidadeService.deletar(id).subscribe({
-        next: (response) => {
-          this.loadEspecialidade();
-          this.messageService.showSuccess('Especialidade removida com sucesso!', 'Fechar');
-        }
-      });
-    }
+    const dialogRef = this.dialog.open(ConfirmDialogComponent, {
+      width: '350px',
+      data: {
+        titulo: 'Remover Especialidade',
+        mensagem: 'Tem certeza que deseja remover esta especialidade?'
+      }
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        this.especialidadeService.deletar(id).subscribe({
+          next: () => {
+            this.loadEspecialidade();
+            this.messageService.showSuccess('Especialidade removida com sucesso!', 'Fechar');
+          }
+        });
+      }
+    });
   }
 
   editItem(especialidade: Especialidade) {

@@ -8,6 +8,7 @@ import { Consulta } from '../../interfaces/consulta';
 import { MedicoService } from '../../services/medico.service';
 import { PacienteService } from '../../services/paciente.service';
 import { MessageService } from '../../shared/utils/message/message.service';
+import { ConfirmDialogComponent } from '../../shared/utils/confirm-dialog/confirm-dialog/confirm-dialog.component';
 
 @Component({
   selector: 'app-agendamento',
@@ -52,14 +53,24 @@ export class AgendamentoComponent implements OnInit {
   }
 
   removeItem(id: number) {
-    if (confirm('Tem certeza que deseja remover este paciente?')) {
-      this.agendamentoService.cancelar(id).subscribe({
-        next: (response) => {
-          this.loadAgendamentos();
-          this.messageService.showSuccess('Consulta removida com sucesso!', 'Fechar');
-        }
-      });
-    }
+    const dialogRef = this.dialog.open(ConfirmDialogComponent, {
+      width: '350px',
+      data: {
+        titulo: 'Cancelar Consulta',
+        mensagem: 'Tem certeza que deseja remover esta consulta?'
+      }
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        this.agendamentoService.cancelar(id).subscribe({
+          next: () => {
+            this.loadAgendamentos();
+            this.messageService.showSuccess('Consulta removida com sucesso!', 'Fechar');
+          }
+        });
+      }
+    });
   }
 
   editItem(consulta: Consulta) {

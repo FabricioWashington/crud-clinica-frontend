@@ -4,6 +4,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { ModalFormMedicoComponent } from '../modal/modal-form-medico/modal-form-medico.component';
 import { MedicoService } from '../../services/medico.service';
 import { MessageService } from '../../shared/utils/message/message.service';
+import { ConfirmDialogComponent } from '../../shared/utils/confirm-dialog/confirm-dialog/confirm-dialog.component';
 
 @Component({
   selector: 'app-medico',
@@ -38,14 +39,24 @@ export class MedicoComponent {
   }
 
   removeItem(id: number) {
-    if (confirm('Tem certeza que deseja remover este paciente?')) {
-      this.medicoService.deletar(id).subscribe({
-        next: (response) => {
-          this.loadMedicos();
-          this.messageService.showSuccess('Paciente removido com sucesso!', 'Fechar');
-        }
-      });
-    }
+    const dialogRef = this.dialog.open(ConfirmDialogComponent, {
+      width: '350px',
+      data: {
+        titulo: 'Remover Paciente',
+        mensagem: 'Tem certeza que deseja remover este paciente?'
+      }
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        this.medicoService.deletar(id).subscribe({
+          next: () => {
+            this.loadMedicos();
+            this.messageService.showSuccess('Paciente removido com sucesso!', 'Fechar');
+          }
+        });
+      }
+    });
   }
 
   editItem(medico: Medico) {
