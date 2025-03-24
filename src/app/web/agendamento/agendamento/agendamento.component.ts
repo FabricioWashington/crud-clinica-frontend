@@ -120,7 +120,6 @@ export class AgendamentoComponent implements OnInit {
   loadPacientes() {
     this.pacienteService.listarTodos().subscribe({
       next: (response) => {
-        console.log(response);
         this.pacientes = response;
       }
     });
