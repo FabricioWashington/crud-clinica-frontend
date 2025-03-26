@@ -40,7 +40,7 @@
         <div class="row g-2">
           <div class="col-md-3 w-100">
             <label>Data da Consulta</label>
-            <input type="date" class="form-control" [(ngModel)]="filtro.data" (ngModelChange)="filtrar()">
+            <input type="date" class="form-control" type="datetime-local" [(ngModel)]="filtro.data" (ngModelChange)="filtrar()">
           </div>
         </div>
         <div class="row g-2">
