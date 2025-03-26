@@ -101,16 +101,16 @@ export class AgendamentoComponent implements OnInit {
 
   editItem(consulta: Consulta) {
     this.dialog.open(ModalFormAgendamentoComponent, {
-          data: {
-            consulta,
-            pacientes: this.pacientes,
-            medicos: this.medicos
-          }
-        }).afterClosed().subscribe(result => {
-          if (result) {
-            this.loadAgendamentos();
-          }
-        });
+      data: {
+        consulta,
+        pacientes: this.pacientes,
+        medicos: this.medicos
+      }
+    }).afterClosed().subscribe(result => {
+      if (result) {
+        this.loadAgendamentos();
+      }
+    });
   }
 
   loading() {
@@ -175,13 +175,14 @@ export class AgendamentoComponent implements OnInit {
       const especialidade = c.medico?.especialidade?.toLowerCase() || '';
       const dataConsulta = c.dataConsulta || '';
       const status = c.status || '';
+      const parsedDate = new Date(dataConsulta);
 
       return (
         nomePaciente.includes(this.filtro.paciente.toLowerCase()) &&
         cpfPaciente.includes(this.filtro.cpf.replace(/\D/g, '')) &&
         nomeMedico.includes(this.filtro.medico.toLowerCase()) &&
         especialidade.includes(this.filtro.especialidade.toLowerCase()) &&
-        (this.filtro.data === '' || this.formatting.formatDate(dataConsulta) === this.filtro.data) &&
+        (this.filtro.data === '' || this.formatting.formatDate(parsedDate) === this.filtro.data) &&
         (this.filtro.status === '' || status === this.filtro.status)
       );
     });
