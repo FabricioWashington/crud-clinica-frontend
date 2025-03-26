@@ -9,6 +9,9 @@ import { MedicoService } from '../../services/medico.service';
 import { PacienteService } from '../../services/paciente.service';
 import { MessageService } from '../../shared/utils/message/message.service';
 import { ConfirmDialogComponent } from '../../shared/utils/confirm-dialog/confirm-dialog/confirm-dialog.component';
+import { FormattingService } from '../../shared/utils/formatting/formatting.service';
+import { EspecialidadeService } from '../../services/especialidade.service';
+import { Especialidade } from '../../interfaces/especialidade';
 
 @Component({
   selector: 'app-agendamento',
@@ -22,14 +25,36 @@ export class AgendamentoComponent implements OnInit {
   public consultas: Consulta[] = [];
   public pacientes: Paciente[] = [];
   public medicos: Medico[] = [];
+  public especialidades: Especialidade[] = [];
+  public consultasFiltradas: Consulta[] = [];
+
+  // filtro avançado
+  public exibirFiltroAvancado = false;
+  public filtroSelecionado = 'todos';
+  public filtroSelecionadoLabel = 'Todos';
+  public valorBusca = '';
+  public opcoesFiltro = [
+    { valor: 'todos', label: 'Todos' },
+    { valor: 'cpf', label: 'CPF do Paciente' },
+  ];
+
+  public filtro = {
+    paciente: '',
+    cpf: '',
+    medico: '',
+    especialidade: '',
+    data: '',
+    status: ''
+  };
 
   constructor(
     private dialog: MatDialog,
     public agendamentoService: AgendamentoService,
     public medicoService: MedicoService,
     public pacienteService: PacienteService,
-    public messageService: MessageService
-
+    public messageService: MessageService,
+    public formatting: FormattingService,
+    public especialidadeService: EspecialidadeService
   ) {
   }
 
@@ -37,6 +62,7 @@ export class AgendamentoComponent implements OnInit {
     this.loadAgendamentos();
     this.loadMedicos();
     this.loadPacientes();
+    this.loadEspecialidades();
   }
 
   openModal() {
@@ -93,6 +119,73 @@ export class AgendamentoComponent implements OnInit {
     }, 1500);
   }
 
+  selecionarFiltro(opcao: any) {
+    this.filtroSelecionado = opcao.valor;
+    this.filtroSelecionadoLabel = opcao.label;
+  }
+
+  pesquisarDireto() {
+    const valor = this.valorBusca.toLowerCase().trim();
+
+    this.consultasFiltradas = this.consultas.filter(c => {
+      const nomePaciente = c.paciente?.nome?.toLowerCase() || '';
+      const cpfPaciente = c.paciente?.cpf?.replace(/\D/g, '') || '';
+      const nomeMedico = c.medico?.nome?.toLowerCase() || '';
+      const especialidade = c.medico?.especialidade?.toLowerCase() || '';
+
+      if (this.filtroSelecionado === 'paciente') {
+        return nomePaciente.includes(valor);
+      } else if (this.filtroSelecionado === 'cpf') {
+        return cpfPaciente.includes(valor.replace(/\D/g, ''));
+      } else if (this.filtroSelecionado === 'medico') {
+        return nomeMedico.includes(valor);
+      } else if (this.filtroSelecionado === 'especialidade') {
+        return especialidade.includes(valor);
+      } else {
+        return (
+          nomePaciente.includes(valor) ||
+          cpfPaciente.includes(valor.replace(/\D/g, '')) ||
+          nomeMedico.includes(valor) ||
+          especialidade.includes(valor)
+        );
+      }
+    });
+  }
+
+  limparFiltros() {
+    this.filtro = {
+      paciente: '',
+      cpf: '',
+      medico: '',
+      especialidade: '',
+      data: '',
+      status: ''
+    };
+    this.valorBusca = '';
+    this.filtroSelecionado = 'todos';
+    this.filtroSelecionadoLabel = 'Todos';
+    this.consultasFiltradas = [...this.consultas];
+  }
+
+  filtrar() {
+    this.consultasFiltradas = this.consultas.filter(c => {
+      const nomePaciente = c.paciente?.nome?.toLowerCase() || '';
+      const cpfPaciente = c.paciente?.cpf?.replace(/\D/g, '') || '';
+      const nomeMedico = c.medico?.nome?.toLowerCase() || '';
+      const especialidade = c.medico?.especialidade?.toLowerCase() || '';
+      const dataConsulta = c.dataConsulta || '';
+      const status = c.status || '';
+
+      return (
+        nomePaciente.includes(this.filtro.paciente.toLowerCase()) &&
+        cpfPaciente.includes(this.filtro.cpf.replace(/\D/g, '')) &&
+        nomeMedico.includes(this.filtro.medico.toLowerCase()) &&
+        especialidade.includes(this.filtro.especialidade.toLowerCase()) &&
+        (this.filtro.data === '' || this.formatting.formatDate(dataConsulta) === this.filtro.data) &&
+        (this.filtro.status === '' || status === this.filtro.status)
+      );
+    });
+  }
 
   //// loads
 
@@ -101,6 +194,7 @@ export class AgendamentoComponent implements OnInit {
     this.agendamentoService.listarTodas().subscribe({
       next: (response) => {
         this.consultas = response;
+        this.consultasFiltradas = response;
       },
       error: (error) => {
         console.error('Erro ao carregar agendamentos:', error);
@@ -121,6 +215,14 @@ export class AgendamentoComponent implements OnInit {
     this.pacienteService.listarTodos().subscribe({
       next: (response) => {
         this.pacientes = response;
+      }
+    });
+  }
+
+  loadEspecialidades() {
+    this.especialidadeService.listarTodas().subscribe({
+      next: (response) => {
+        this.especialidades = response;
       }
     });
   }

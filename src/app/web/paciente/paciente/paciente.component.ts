@@ -15,6 +15,26 @@ import { ConfirmDialogComponent } from '../../shared/utils/confirm-dialog/confir
 export class PacienteComponent implements OnInit {
   public isLoading = true;
   public pacientes: Paciente[] = [];
+  public pacientesFiltrados: Paciente[] = [];
+
+  // filtro avançado
+  public exibirFiltroAvancado = false;
+  public filtroSelecionado = 'todos';
+  public filtroSelecionadoLabel = 'Todos';
+  public valorBusca = '';
+  public opcoesFiltro = [
+    { valor: 'todos', label: 'Todos' },
+    { valor: 'nome', label: 'Nome' },
+    { valor: 'cpf', label: 'Cpf' },
+    { valor: 'email', label: 'E-mail' },
+  ];
+
+  public filtro = {
+    paciente: '',
+    nome: '',
+    cpf: '',
+    email: ''
+  };
 
   constructor(
     private dialog: MatDialog,
@@ -80,6 +100,63 @@ export class PacienteComponent implements OnInit {
     }, 1500);
   }
 
+  selecionarFiltro(opcao: any) {
+    this.filtroSelecionado = opcao.valor;
+    this.filtroSelecionadoLabel = opcao.label;
+  }
+
+
+  pesquisarDireto() {
+    const valor = this.valorBusca.toLowerCase().trim();
+
+    this.pacientesFiltrados = this.pacientes.filter(c => {
+      const nome = c.nome?.toLowerCase() || '';
+      const cpf = c.cpf?.replace(/\D/g, '') || '';
+      const email = c.email?.toLowerCase() || '';
+
+      if (this.filtroSelecionado === 'nome') {
+        return nome.includes(valor);
+      } else if (this.filtroSelecionado === 'cpf') {
+        return cpf.includes(valor.replace(/\D/g, ''));
+      } else if (this.filtroSelecionado === 'email') {
+        return email.includes(valor);
+      } else {
+        return (
+          nome.includes(valor) ||
+          cpf.includes(valor.replace(/\D/g, '')) ||
+          email.includes(valor)
+        );
+      }
+    });
+  }
+
+  limparFiltros() {
+    this.filtro = {
+      paciente: '',
+      nome: '',
+      cpf: '',
+      email: ''
+    };
+    this.valorBusca = '';
+    this.filtroSelecionado = 'todos';
+    this.filtroSelecionadoLabel = 'Todos';
+    this.pacientesFiltrados = [...this.pacientes];
+  }
+
+  filtrar() {
+    this.pacientesFiltrados = this.pacientes.filter(c => {
+      const nome = c.nome?.toLowerCase() || '';
+      const cpf = c.cpf?.replace(/\D/g, '') || '';
+      const email = c.email?.toLowerCase() || '';
+
+      return (
+        nome.includes(this.filtro.nome.toLowerCase()) &&
+        cpf.includes(this.filtro.cpf.replace(/\D/g, '')) &&
+        email.includes(this.filtro.email.toLowerCase())
+      );
+    });
+  }
+
   //// loads
 
   loadPacientes() {
@@ -87,6 +164,7 @@ export class PacienteComponent implements OnInit {
     this.pacienteService.listarTodos().subscribe({
       next: (response) => {
         this.pacientes = response;
+        this.pacientesFiltrados = response;
       }
     });
   }

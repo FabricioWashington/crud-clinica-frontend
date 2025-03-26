@@ -16,6 +16,21 @@ export class EspecialidadeComponent implements OnInit {
   public data: any[] = [];
   public isLoading = true;
   public especialidades: Especialidade[] = [];
+  public especialidadesFiltradas: Especialidade[] = [];
+
+  // filtro avançado
+  public exibirFiltroAvancado = false;
+  public filtroSelecionado = 'todos';
+  public filtroSelecionadoLabel = 'Todos';
+  public valorBusca = '';
+  public opcoesFiltro = [
+    { valor: 'todos', label: 'Todos' },
+    { valor: 'nome', label: 'Nome' },
+  ];
+
+  public filtro = {
+    nome: ''
+  };
 
   constructor(
     private dialog: MatDialog,
@@ -81,6 +96,48 @@ export class EspecialidadeComponent implements OnInit {
     }, 1500);
   }
 
+  selecionarFiltro(opcao: any) {
+    this.filtroSelecionado = opcao.valor;
+    this.filtroSelecionadoLabel = opcao.label;
+  }
+
+
+  pesquisarDireto() {
+    const valor = this.valorBusca.toLowerCase().trim();
+
+    this.especialidadesFiltradas = this.especialidades.filter(c => {
+      const nome = c.nome?.toLowerCase() || '';
+
+      if (this.filtroSelecionado === 'nome') {
+        return nome.includes(valor);
+      } else {
+        return (
+          nome.includes(valor)
+        );
+      }
+    });
+  }
+
+  limparFiltros() {
+    this.filtro = {
+      nome: ''
+    };
+    this.valorBusca = '';
+    this.filtroSelecionado = 'todos';
+    this.filtroSelecionadoLabel = 'Todos';
+    this.especialidadesFiltradas = [...this.especialidades];
+  }
+
+  filtrar() {
+    this.especialidadesFiltradas = this.especialidades.filter(c => {
+      const especialidade = c.nome?.toLowerCase() || '';
+
+      return (
+        especialidade.includes(this.filtro.nome.toLowerCase())
+      );
+    });
+  }
+
 
   //// loads
 
@@ -89,6 +146,7 @@ export class EspecialidadeComponent implements OnInit {
     this.especialidadeService.listarTodas().subscribe({
       next: (response) => {
         this.especialidades = response;
+        this.especialidadesFiltradas = response;
       },
       error: (error) => {
         console.error('Erro ao carregar Especialidades:', error);
