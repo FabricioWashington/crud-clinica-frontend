@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 import { Paciente } from '../../interfaces/paciente';
 import { Medico } from '../../interfaces/medico';
 import { ModalFormAgendamentoComponent } from '../modal/modal-form-agendamento/modal-form-agendamento.component';
@@ -20,6 +20,8 @@ import { EspecialidadeService } from '../../services/especialidade.service';
   styleUrl: './agendamento.component.scss'
 })
 export class AgendamentoComponent implements OnInit {
+  @Output() onComplete = new EventEmitter<any>();
+
   public data: any[] = [];
   public isLoading = true;
   public consultas: Consulta[] = [];
@@ -74,6 +76,7 @@ export class AgendamentoComponent implements OnInit {
     }).afterClosed().subscribe(result => {
       if (result) {
         this.loadAgendamentos();
+        this.onComplete.emit();
       }
     });
   }
@@ -92,6 +95,7 @@ export class AgendamentoComponent implements OnInit {
         this.agendamentoService.cancelar(id).subscribe({
           next: () => {
             this.loadAgendamentos();
+            this.onComplete.emit();
             this.messageService.showSuccess('Consulta removida com sucesso!', 'Fechar');
           }
         });
@@ -109,6 +113,7 @@ export class AgendamentoComponent implements OnInit {
     }).afterClosed().subscribe(result => {
       if (result) {
         this.loadAgendamentos();
+        this.onComplete.emit();
       }
     });
   }

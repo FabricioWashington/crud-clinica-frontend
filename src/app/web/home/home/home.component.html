@@ -36,8 +36,10 @@
     </div>
   </section>
 
-  <app-agendamento *ngIf="componenteAtual === 'agendamento'"></app-agendamento>
-  <app-paciente *ngIf="componenteAtual === 'paciente'"></app-paciente>
-  <app-medico *ngIf="componenteAtual === 'medico'"></app-medico>
-  <app-especialidade *ngIf="componenteAtual === 'especialidade'"></app-especialidade>
+  <app-agendamento *ngIf="componenteAtual === 'agendamento'"
+    (onComplete)="atualizarTotalAgendamentos()"></app-agendamento>
+  <app-paciente *ngIf="componenteAtual === 'paciente'" (onComplete)="atualizarTotalPacientes()"></app-paciente>
+  <app-medico *ngIf="componenteAtual === 'medico'" (onComplete)="atualizarTotalMedicos()"></app-medico>
+  <app-especialidade *ngIf="componenteAtual === 'especialidade'"
+    (onComplete)="atualizarTotalEspecialidades()"></app-especialidade>
 </body>

@@ -38,6 +38,22 @@ export class HomeComponent implements OnInit {
     this.componenteAtual = nome;
   }
 
+  atualizarTotalEspecialidades() {
+    this.loadTotalEspecialidades();
+  }
+
+  atualizarTotalMedicos() {
+    this.loadTotalMedicos();
+  }
+
+  atualizarTotalPacientes() {
+    this.loadTotalPacientes();
+  }
+
+  atualizarTotalAgendamentos() {
+    this.loadTotalAgendamentos();
+  }
+
   //// loads
 
   loadTotalEspecialidades(){

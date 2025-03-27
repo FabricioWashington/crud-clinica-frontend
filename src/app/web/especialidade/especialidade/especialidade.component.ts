@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { EspecialidadeService } from '../../services/especialidade.service';
 import { MessageService } from '../../shared/utils/message/message.service';
@@ -13,6 +13,8 @@ import { ConfirmDialogComponent } from '../../shared/utils/confirm-dialog/confir
   styleUrl: './especialidade.component.scss'
 })
 export class EspecialidadeComponent implements OnInit {
+  @Output() onComplete = new EventEmitter<any>();
+
   public data: any[] = [];
   public isLoading = true;
   public especialidades: Especialidade[] = [];
@@ -52,6 +54,7 @@ export class EspecialidadeComponent implements OnInit {
     }).afterClosed().subscribe(result => {
       if (result) {
         this.loadEspecialidade();
+        this.onComplete.emit();
       }
     });
   }
@@ -70,6 +73,7 @@ export class EspecialidadeComponent implements OnInit {
         this.especialidadeService.deletar(id).subscribe({
           next: () => {
             this.loadEspecialidade();
+            this.onComplete.emit();
             this.messageService.showSuccess('Especialidade removida com sucesso!', 'Fechar');
           }
         });
@@ -85,6 +89,7 @@ export class EspecialidadeComponent implements OnInit {
       }
     }).afterClosed().subscribe(result => {
       if (result) {
+        this.onComplete.emit();
         this.loadEspecialidade();
       }
     });

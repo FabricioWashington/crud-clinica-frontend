@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { Paciente } from '../../interfaces/paciente';
 import { MatDialog } from '@angular/material/dialog';
 import { ModalFormPacienteComponent } from '../modal/modal-form-paciente/modal-form-paciente.component';
@@ -13,6 +13,8 @@ import { ConfirmDialogComponent } from '../../shared/utils/confirm-dialog/confir
   styleUrl: './paciente.component.scss'
 })
 export class PacienteComponent implements OnInit {
+  @Output() onComplete = new EventEmitter<any>();
+
   public isLoading = true;
   public pacientes: Paciente[] = [];
   public pacientesFiltrados: Paciente[] = [];
@@ -55,6 +57,7 @@ export class PacienteComponent implements OnInit {
     }).afterClosed().subscribe(result => {
       if (result) {
         this.loadPacientes();
+        this.onComplete.emit();
       }
     });
 
@@ -74,6 +77,7 @@ export class PacienteComponent implements OnInit {
         this.pacienteService.deletar(id).subscribe({
           next: () => {
             this.loadPacientes();
+            this.onComplete.emit();
             this.messageService.showSuccess('Paciente removido com sucesso!', 'Fechar');
           }
         });
@@ -90,6 +94,7 @@ export class PacienteComponent implements OnInit {
     }).afterClosed().subscribe(result => {
       if (result) {
         this.loadPacientes();
+        this.onComplete.emit();
       }
     });
   }

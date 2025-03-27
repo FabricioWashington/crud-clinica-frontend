@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, EventEmitter, Output } from '@angular/core';
 import { Medico } from '../../interfaces/medico';
 import { MatDialog } from '@angular/material/dialog';
 import { ModalFormMedicoComponent } from '../modal/modal-form-medico/modal-form-medico.component';
@@ -15,6 +15,8 @@ import { Especialidade } from '../../interfaces/especialidade';
   styleUrl: './medico.component.scss'
 })
 export class MedicoComponent {
+  @Output() onComplete = new EventEmitter<any>();
+
   public isLoading = true;
   public medicos: Medico[] = [];
   public especialidades: Especialidade[] = [];
@@ -53,6 +55,7 @@ export class MedicoComponent {
     }).afterClosed().subscribe(result => {
       if (result) {
         this.loadMedicos();
+        this.onComplete.emit();
       }
     });
 
@@ -72,6 +75,7 @@ export class MedicoComponent {
         this.medicoService.deletar(id).subscribe({
           next: () => {
             this.loadMedicos();
+            this.onComplete.emit();
             this.messageService.showSuccess('Paciente removido com sucesso!', 'Fechar');
           }
         });
@@ -88,6 +92,7 @@ export class MedicoComponent {
     }).afterClosed().subscribe(result => {
       if (result) {
         this.loadMedicos();
+        this.onComplete.emit();
       }
     });
   }
