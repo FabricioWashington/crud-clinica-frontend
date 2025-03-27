@@ -17,7 +17,9 @@
           <div class="form-group p-2">
             <label>Especialidade</label>
             <ng-container *ngIf="especialidades.length > 0; else noEspecialidades">
-              <select class="form-control" [(ngModel)]="formData.especialidade" name="especialidade" placeholder="Selecione">
+              <select class="form-control" [(ngModel)]="formData.especialidade" name="especialidade"
+                placeholder="Selecione">
+                <option [value]="">Selecione</option>
                 <option *ngFor="let esp of especialidades" [value]="esp.nome">
                   {{ esp.nome }}
                 </option>
