@@ -3,6 +3,7 @@ import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { AgendamentoService } from '../../../services/agendamento.service';
 import { MessageService } from '../../../shared/utils/message/message.service';
 import { ConsultaRequestDTO } from '../../../interfaces/ConsultaRequestDTO';
+import { FormattingService } from '../../../shared/utils/formatting/formatting.service';
 
 @Component({
   selector: 'app-modal-form-agendamento',
@@ -22,14 +23,16 @@ export class ModalFormAgendamentoComponent implements OnInit{
     public dialogRef: MatDialogRef<ModalFormAgendamentoComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any,
     public agendamentoService: AgendamentoService,
+    public formatting: FormattingService,
     public messageService: MessageService,
   ) {
     if (data?.consulta) {
+      const dataConsulta = this.formatting.formatDateToInputDatetime(data.consulta.dataConsulta);
       this.formData = {
         id: data.consulta.id,
         paciente_id: data.consulta.paciente.id,
         medico_id: data.consulta.medico.id,
-        dataConsulta: data.consulta.dataConsulta,
+        dataConsulta: dataConsulta,
         status: data.consulta.status
       };
     }

@@ -4,7 +4,7 @@ import { Injectable } from '@angular/core';
   providedIn: 'root'
 })
 export class FormattingService {
-  constructor() {}
+  constructor() { }
 
   formatCPF(cpf: string): string {
     cpf = cpf.replace(/\D/g, '');
@@ -58,5 +58,26 @@ export class FormattingService {
     const minuto = d.getMinutes().toString().padStart(2, '0');
     return `${dia}/${mes}/${ano} ${hora}:${minuto}`;
   }
+
+  formatDateToInputDatetime(date: Date | string): string {
+    let d: Date;
+
+    if (typeof date === 'string' && date.includes('/')) {
+      const [dia, mes, anoHora] = date.split('/');
+      const [ano, hora] = anoHora.split(' ');
+      const [h, m] = (hora || '00:00').split(':');
+      d = new Date(+ano, +mes - 1, +dia, +h, +m);
+    } else {
+      d = new Date(date);
+    }
+
+    const year = d.getFullYear();
+    const month = String(d.getMonth() + 1).padStart(2, '0');
+    const day = String(d.getDate()).padStart(2, '0');
+    const hours = String(d.getHours()).padStart(2, '0');
+    const minutes = String(d.getMinutes()).padStart(2, '0');
+    return `${year}-${month}-${day}T${hours}:${minutes}`;
+  }
+
 
 }
