@@ -12,7 +12,7 @@
           <div class="form-group p-2">
             <label>Paciente</label>
             <ng-container *ngIf="data.pacientes?.length > 0; else noPacientes">
-              <select class="form-control" [(ngModel)]="formData.paciente_id" name="paciente_id">
+              <select class="form-control" [(ngModel)]="formData.paciente_id" name="paciente_id" placeholder="Selecione">
                 <option *ngFor="let paciente of data.pacientes" [value]="paciente.id">
                   {{ paciente.nome }}
                 </option>
@@ -26,7 +26,7 @@
           <div class="form-group p-2">
             <label>Médico</label>
             <ng-container *ngIf="data.medicos?.length > 0; else noMedicos">
-              <select class="form-control" [(ngModel)]="formData.medico_id" name="medico_id">
+              <select class="form-control" [(ngModel)]="formData.medico_id" name="medico_id" placeholder="Selecione">
                 <option *ngFor="let medico of data.medicos" [value]="medico.id">
                   {{ medico.nome }}
                 </option>
@@ -44,7 +44,7 @@
 
           <div class="form-group p-2">
             <label>Status</label>
-            <select class="form-control" [(ngModel)]="formData.status" name="status">
+            <select class="form-control" [(ngModel)]="formData.status" name="status" placeholder="Selecione">
               <option value="AGENDADA">Agendada</option>
               <option value="REALIZADA">Realizada</option>
               <option value="CANCELADA">Cancelada</option>
