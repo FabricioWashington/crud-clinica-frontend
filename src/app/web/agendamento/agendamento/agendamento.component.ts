@@ -180,9 +180,6 @@ export class AgendamentoComponent implements OnInit {
         ? this.formatting.formatInputDateTimeToBr(this.filtro.data)
         : '';
 
-      console.log('Filtro:', filtroDataFormatada);
-      console.log('Consulta:', dataConsulta);
-
       return (
         nomePaciente.includes(this.filtro.nomePaciente?.toLowerCase() || '') &&
         cpfPaciente.includes(this.filtro.cpf?.replace(/\D/g, '') || '') &&
