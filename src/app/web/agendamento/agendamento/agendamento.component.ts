@@ -10,8 +10,8 @@ import { PacienteService } from '../../services/paciente.service';
 import { MessageService } from '../../shared/utils/message/message.service';
 import { ConfirmDialogComponent } from '../../shared/utils/confirm-dialog/confirm-dialog/confirm-dialog.component';
 import { FormattingService } from '../../shared/utils/formatting/formatting.service';
-import { EspecialidadeService } from '../../services/especialidade.service';
 import { Especialidade } from '../../interfaces/especialidade';
+import { EspecialidadeService } from '../../services/especialidade.service';
 
 @Component({
   selector: 'app-agendamento',
@@ -39,9 +39,9 @@ export class AgendamentoComponent implements OnInit {
   ];
 
   public filtro = {
-    paciente: '',
+    nomePaciente: '',
     cpf: '',
-    medico: '',
+    nomeMedico: '',
     especialidade: '',
     data: '',
     status: ''
@@ -154,9 +154,9 @@ export class AgendamentoComponent implements OnInit {
 
   limparFiltros() {
     this.filtro = {
-      paciente: '',
+      nomePaciente: '',
       cpf: '',
-      medico: '',
+      nomeMedico: '',
       especialidade: '',
       data: '',
       status: ''
@@ -173,17 +173,24 @@ export class AgendamentoComponent implements OnInit {
       const cpfPaciente = c.paciente?.cpf?.replace(/\D/g, '') || '';
       const nomeMedico = c.medico?.nome?.toLowerCase() || '';
       const especialidade = c.medico?.especialidade?.toLowerCase() || '';
-      const dataConsulta = c.dataConsulta || '';
+      const dataConsulta = c.dataConsulta
       const status = c.status || '';
-      const parsedDate = new Date(dataConsulta);
+
+      const filtroDataFormatada = this.filtro.data
+        ? this.formatting.formatInputDateTimeToBr(this.filtro.data)
+        : '';
+
+      console.log('Filtro:', filtroDataFormatada);
+      console.log('Consulta:', dataConsulta);
 
       return (
-        nomePaciente.includes(this.filtro.paciente.toLowerCase()) &&
-        cpfPaciente.includes(this.filtro.cpf.replace(/\D/g, '')) &&
-        nomeMedico.includes(this.filtro.medico.toLowerCase()) &&
-        especialidade.includes(this.filtro.especialidade.toLowerCase()) &&
-        (this.filtro.data === '' || this.formatting.formatDate(parsedDate) === this.filtro.data) &&
-        (this.filtro.status === '' || status === this.filtro.status)
+        nomePaciente.includes(this.filtro.nomePaciente?.toLowerCase() || '') &&
+        cpfPaciente.includes(this.filtro.cpf?.replace(/\D/g, '') || '') &&
+        nomeMedico.includes(this.filtro.nomeMedico?.toLowerCase() || '') &&
+        especialidade.includes(this.filtro.especialidade?.toLowerCase() || '') &&
+        (filtroDataFormatada === '' || this.formatting.formatDateTimeBr(dataConsulta) === filtroDataFormatada) &&
+
+        (!this.filtro.status || status === this.filtro.status)
       );
     });
   }

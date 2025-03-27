@@ -57,13 +57,13 @@
         <div class="row g-2">
           <div class="col-md-3 w-100">
             <label>Medico</label>
-            <select class="form-select" [(ngModel)]="filtro.paciente" (ngModelChange)="filtrar()">
+            <select class="form-select" [(ngModel)]="filtro.nomeMedico" (ngModelChange)="filtrar()">
               <option value="">Todos</option>
               <option *ngFor="let medico of medicos" [value]="medico.nome">{{ medico.nome }}</option>
             </select>
           </div>
         </div>
-        <div class="row g-2" *ngIf="filtro.medico">
+        <div class="row g-2">
           <div class="col-md-3 w-100">
             <label>Especialidade</label>
             <select class="form-select" [(ngModel)]="filtro.especialidade" (ngModelChange)="filtrar()">
@@ -75,7 +75,7 @@
         <div class="row g-2">
           <div class="col-md-3 w-100">
             <label>Paciente</label>
-            <select class="form-select" [(ngModel)]="filtro.paciente" (ngModelChange)="filtrar()">
+            <select class="form-select" [(ngModel)]="filtro.nomePaciente" (ngModelChange)="filtrar()">
               <option value="">Todos</option>
               <option *ngFor="let paciente of pacientes" [value]="paciente.nome">{{ paciente.nome }}</option>
             </select>
